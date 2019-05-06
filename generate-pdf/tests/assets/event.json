@@ -1,0 +1,27 @@
+{
+    "requestId": "abcd-efgh-ijkl-mnop",
+    "userId": "abcd-efgh-ijkl-mnop",
+    "lobbyId": "abcd-efgh-ijkl-mnop",
+    "templateId": "template1",
+    "invoiceId": "SK00001",
+    "data": {
+        "InvoiceNo": "SK00001/2007",
+        "CustomerAddressName": "Michal Dulovic",
+        "CustomerAddressLine1": "Dunajska 24",
+        "CustomerAddressLine2": "Bratislava",
+        "CustomerAddressLine3": "821 33",
+        "CustomerCountry": "Slovakia",
+        "IssuedDate": "13-may-2019",
+        "DeliveryDate": "13-may-2019",
+        "DueDate": "13-may-2019",
+        "CustomerName": "Michal Dulovic ml.",
+        "Item1Description": "Car wash service",
+        "Item1Quantity": "2",
+        "Item1Unit": "ks",
+        "Item1UnitPrice": "20.1",
+        "Item1Vat": "20%",
+        "Item1UnitPriceVat": "24.12",
+        "Item1Amount": "48.24",
+        "TotalAmount": "48.24"
+    }
+}

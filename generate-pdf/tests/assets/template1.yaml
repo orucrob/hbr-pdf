@@ -1,0 +1,86 @@
+Default:
+  options:
+    font: 'Pacifico.ttf'
+    size: 10
+    colorspace: 'rgb'
+    color: 0x009900
+Fields:
+  InvoiceNo:
+    x: 310
+    y: 538
+    options:
+      size: 24
+      colorspace: 'rgb'
+      color: 0x880000
+    example: '11/2007'
+  CustomerAddressName:
+    x: 70
+    y: 650
+    example: 'Michal Dulovic'
+  CustomerAddressLine1:
+    x: 70
+    y: 635
+    example: 'Dunajska 24'
+  CustomerAddressLine2:
+    x: 70
+    y: 620
+    example: 'Bratislava'
+  CustomerAddressLine3:
+    x: 70
+    y: 605
+    example: '821 33'
+  CustomerCountry:
+    x: 70
+    y: 590
+    example: 'Slovakia'
+  IssuedDate:
+    x: 480
+    y: 525
+    example: '13-may-2019'
+  DeliveryDate:
+    x: 480
+    y: 510
+    example: '13-may-2019'
+  DueDate:
+    x: 480
+    y: 495
+    example: '13-may-2019'
+  CustomerName:
+    x: 100
+    y: 490
+    example: 'Michal Dulovic ml.'
+
+  Item1Description:
+    x: 73
+    y: 375
+    example: 'Car wash service'
+  Item1Quantity:
+    x: 270
+    y: 375
+    example: '2'
+  Item1Unit:
+    x: 320
+    y: 375
+    example: 'ks'
+  Item1UnitPrice:
+    x: 375
+    y: 375
+    example: '20.1'
+  Item1Vat:
+    x: 425
+    y: 375
+    example: '20%'
+  Item1UnitPriceVat:
+    x: 470
+    y: 375
+    example: '24.12'
+  Item1Amount:
+    x: 520
+    y: 375
+    example: '48.24'
+  TotalAmount:
+    x: 480
+    y: 155
+    example: '48.24'
+    options:
+      size: 24

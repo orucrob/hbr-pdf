@@ -1,0 +1,102 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Template for hbr-pdf
+Parameters:
+  Env:
+    Description: 'ID for environment (stage). Must be lowercase, because of S3 bucket name.'
+    Type: String
+    Default: 'dev'
+
+Resources:
+  #FN - GetSIngedUrl
+  GetSignedUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: signedurl/
+      Handler: app.lambdaHandler
+      MemorySize: 128
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          PDF_TABLE: !Ref PDFFilesTable
+          BUCKET: !Ref S3PDFBucket
+      Events:
+        GetRole:
+          Type: Api
+          Properties:
+            Path: /signedurl/{invoiceId}
+            Method: get
+      Policies:
+        - AmazonS3FullAccess #TODO only to bucket
+  
+  #FN - Generate PDF
+  GeneratePdfFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: generate-pdf/
+      Handler: app.lambdaHandler
+      MemorySize: 256
+      Runtime: nodejs8.10
+      Timeout: 30
+      Events:
+        MySQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt PdfSqsQueue.Arn
+            BatchSize: 1
+      Environment:
+        Variables:
+          PDF_TABLE: !Ref PDFFilesTable
+          BUCKET: !Ref S3PDFBucket
+      Policies:
+        - AWSLambdaSQSQueueExecutionRole
+        - AmazonS3FullAccess #TODO only to bucket
+        - AmazonDynamoDBFullAccess #TODO only to table
+  
+  #SQS - interface
+  PdfSqsQueue:
+    Type: AWS::SQS::Queue
+    Properties: 
+      QueueName: !Sub "${Env}-pdfqueue"
+      ReceiveMessageWaitTimeSeconds : 20 #TODO lambda seems to have own defaults?!
+
+  #S3 for templates & pdfs
+  S3PDFBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: !Sub "${Env}-pdfbucket-${AWS::AccountId}"
+    #We are not able to successfully delete stack until S3 is empty
+    #DeletionPolicy: Retain
+
+  #PDFs Table
+  PDFFilesTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Delete # user Retain for prod
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'requestId'
+          AttributeType: 'S'
+        - AttributeName: 'fileKey'
+          AttributeType: 'S'
+        # - AttributeName: 'userId'
+        #   AttributeType: 'S'
+        # - AttributeName: 'lobbyId'
+        #   AttributeType: 'S'
+        # - AttributeName: 'created'
+        #   AttributeType: 'S'
+        # - AttributeName: 'updated'
+        #   AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'requestId'
+          KeyType: 'HASH'
+      TableName: !Sub '${Env}-PDFFiles'
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: 'fileKeyGSI'
+          KeySchema:
+            - AttributeName: 'fileKey'
+              KeyType: 'HASH'
+          Projection:
+            ProjectionType: 'ALL'

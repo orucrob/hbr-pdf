@@ -1,0 +1,19 @@
+{
+    "name": "generatepdf",
+    "version": "1.0.0",
+    "main": "app.js",
+    "dependencies": {
+        "fs": "0.0.1-security",
+        "hummus": "^1.0.104",
+        "mkdirp": "^0.5.1",
+        "path": "^0.12.7",
+        "yamljs": "^0.3.0"
+    },
+    "scripts": {
+        "test": "mocha tests/unit/"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "mocha": "^5.1.1"
+    }
+}
