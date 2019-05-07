@@ -36,3 +36,7 @@ Then create folders in S3 bucket based on constants in `./generate-pdf/app.js`
 -   automate creation of folders in S3 and move constants to env variables
 -   include test data and describe how to test it
 -   update permissions in template to reflect minimal needs
+
+## HLD
+
+![aws hld](aws.png)
